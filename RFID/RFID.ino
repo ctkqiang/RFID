@@ -1,20 +1,25 @@
+/**
+ * @author: John Melody Me
+ * @contact: <JOhnmelody@dingtalk.com>
+ */
 #include "SPI.h"
 #include "MFRC522.h"
 
 /**
-  +-----------------+-------------+
-  | RFID RC522 PIN  | ARDUINO UNO |
-  +-----------------+-------------+
-  | SDA             | 10          |
-  | SCK             | 13          |
-  | MOSI            | 11          |
-  | MISO            | 12          |
-  | IRQ             | UNUSED      |
-  | GND             | GND         |
-  | RST             | 9           |
-  | 3.3V            | 3.3V        |
-  +-----------------+-------------+
-*/
+ * +-----------------+-------------+
+ * | RFID RC522 PIN  | ARDUINO UNO |
+ * +-----------------+-------------+
+ * | SDA             | 10          |
+ * | SCK             | 13          |
+ * | MOSI            | 11          |
+ * | MISO            | 12          |
+ * | IRQ             | UNUSED      |
+ * | GND             | GND         |
+ * | RST             | 9           |
+ * | 3.3V            | 3.3V        |
+ * +-----------------+-------------+
+ */
+ 
 #define PIN_RST 9
 #define PIN_SDA 10
 
