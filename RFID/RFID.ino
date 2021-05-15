@@ -23,11 +23,10 @@
 #define PIN_RST 9
 #define PIN_SDA 10
 #define BAUD_RATE 9600
-#define RFID_TONE 1000
+#define RFID_TONE 100
 #define BUZZER 3
-#define DURATION 500
+#define DURATION 700
 #define PIEZO_PIN 8
-
 #define MASTER_TAG_PROHIBITED "6FB077CC"
 #define MASTER_TAG "D743AF7B"
 #define MASTER_TAG_ALT "5527112A"
