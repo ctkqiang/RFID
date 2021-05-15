@@ -13,7 +13,6 @@ class ArduinoService
     end  
     
     def order_confirmation(sp)
-        sp.write('a')
         sp.flush
     end  
     
