@@ -28,11 +28,22 @@
 #define DURATION 500
 #define PIEZO_PIN 8
 
-int tones[] = { 1915, 1700, 1519, 1432, 1275, 1136, 1014, 956};
+#define MASTER_TAG_PROHIBITED "6FB077CC"
+#define MASTER_TAG "D743AF7B"
+#define MASTER_TAG_ALT "5527112A"
+
+int tones[] = {
+  1915,
+  1700,
+  1519,
+  1432,
+  1275,
+  1136,
+  1014,
+  956
+};
 
 String tagID = "";
-String MASTER_TAG = "D743AF7B";
-String MASTER_TAG_ALT = "5527112A";
 
 MFRC522 mfrc522(PIN_SDA, PIN_RST);
 
@@ -78,7 +89,7 @@ void loop()
   }
 
   // Dump debug info about the card; PICC_HaltA() is automatically called
-  // mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+//   mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
 }
 
 void playTone(int rfidTone, int duration)
@@ -120,6 +131,12 @@ void verification()
     if (tagID == MASTER_TAG)
     {
       log("Access Granted");
+      log("Card ID: " + tagID + "\n");
+    }
+    else if (tagID == MASTER_TAG_PROHIBITED)
+    {
+      log("Access Denied [PLEASE DO NOT USE A CITIZENSHIP CARD]");
+      log("Identity: CHENG TZE KEONG");
       log("Card ID: " + tagID + "\n");
     }
     else
