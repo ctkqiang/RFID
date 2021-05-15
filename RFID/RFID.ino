@@ -4,6 +4,7 @@
 */
 #include "SPI.h"
 #include "MFRC522.h"
+#include <Keyboard.h>
 
 /**
    +-----------------+-------------+
@@ -23,7 +24,7 @@
 #define PIN_RST 9
 #define PIN_SDA 10
 #define BAUD_RATE 9600
-#define RFID_TONE 100
+#define RFID_TONE 1000
 #define BUZZER 3
 #define DURATION 700
 #define PIEZO_PIN 8
@@ -54,6 +55,9 @@ void setup()
   // Initiate Proximity Coupling Device
   mfrc522.PCD_Init();
   mfrc522.PCD_DumpVersionToSerial();
+
+  // Initiate Keyboard
+
 
   // Initiate Serial Connection
   Serial.begin(BAUD_RATE);
@@ -88,7 +92,7 @@ void loop()
   }
 
   // Dump debug info about the card; PICC_HaltA() is automatically called
-//   mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+  //   mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
 }
 
 void playTone(int rfidTone, int duration)
@@ -135,7 +139,6 @@ void verification()
     else if (tagID == MASTER_TAG_PROHIBITED)
     {
       log("Access Denied [PLEASE DO NOT USE A CITIZENSHIP CARD]");
-      log("Identity: CHENG TZE KEONG");
       log("Card ID: " + tagID + "\n");
     }
     else
