@@ -56,16 +56,21 @@ void setup()
   mfrc522.PCD_Init();
   mfrc522.PCD_DumpVersionToSerial();
 
-  // Initiate Keyboard
-
-
   // Initiate Serial Connection
   Serial.begin(BAUD_RATE);
   while (!Serial);
 
-  if (!mfrc522.PICC_IsNewCardPresent())
+  if (mfrc522.PICC_IsNewCardPresent() == NULL)
   {
-    Serial.println(" No Card Presented.");
+    log("Please Present Card\n");
+  }
+
+  while (getCurrentState())
+  {
+    if (true)
+    {
+      log(" No Card Presented.");
+    }
   }
 }
 
@@ -152,4 +157,17 @@ void verification()
 void log(String input)
 {
   Serial.println(input);
+}
+
+boolean getCurrentState()
+{
+  if (mfrc522.PICC_IsNewCardPresent())
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+
 }
