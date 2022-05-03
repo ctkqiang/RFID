@@ -1,26 +1,24 @@
 /**
-   @author: John Melody Me
-   @contact: <JOhnmelody@dingtalk.com>
-*/
+ * @author: John Melody Me
+ * @contact: <Johnmelodyme@yahoo.com>
+ */
 #include "SPI.h"
 #include "MFRC522.h"
-#include <Keyboard.h>
-
 /**
-   +-----------------+-------------+
-   | RFID RC522 PIN  | ARDUINO UNO |
-   +-----------------+-------------+
-   | SDA             | 10          |
-   | SCK             | 13          |
-   | MOSI            | 11          |
-   | MISO            | 12          |
-   | IRQ             | UNUSED      |
-   | GND             | GND         |
-   | RST             | 9           |
-   | 3.3V            | 3.3V        |
-   +-----------------+-------------+
-*/
-
+ * Configuation
+ * +-----------------+-------------+
+ * | RFID RC522 PIN  | ARDUINO UNO |
+ * +-----------------+-------------+
+ * | SDA             | 10          |
+ * | SCK             | 13          |
+ * | MOSI            | 11          |
+ * | MISO            | 12          |
+ * | IRQ             | UNUSED      |
+ * | GND             | GND         |
+ * | RST             | 9           |
+ * | 3.3V            | 3.3V        |
+ * +-----------------+-------------+
+ */
 #define PIN_RST 9
 #define PIN_SDA 10
 #define BAUD_RATE 9600
@@ -43,6 +41,7 @@ int tones[] = {
   956
 };
 
+
 String tagID = "";
 
 MFRC522 mfrc522(PIN_SDA, PIN_RST);
@@ -60,7 +59,7 @@ void setup()
   Serial.begin(BAUD_RATE);
   while (!Serial);
 
-  if (mfrc522.PICC_IsNewCardPresent() == NULL)
+  if (!mfrc522.PICC_IsNewCardPresent())
   {
     log("Please Present Card\n");
   }
@@ -105,7 +104,7 @@ void playTone(int rfidTone, int duration)
   tone(PIEZO_PIN , rfidTone, duration);
 }
 
-boolean getCardIdentification()
+bool getCardIdentification()
 {
   if (!mfrc522.PICC_IsNewCardPresent())
   {
@@ -159,15 +158,12 @@ void log(String input)
   Serial.println(input);
 }
 
-boolean getCurrentState()
+bool getCurrentState()
 {
   if (mfrc522.PICC_IsNewCardPresent())
   {
     return true;
   }
-  else
-  {
-    return false;
-  }
 
+  return false;
 }
