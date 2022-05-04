@@ -43,7 +43,7 @@ String content = "";
  * This is the actual data which is going to be written 
  * into the card 
  */
-byte blockData [16] = { "Some-String" };
+byte blockData [16] = { "John Melody" };
 
 /** 
  * Create another array to read data from Block 
@@ -89,10 +89,14 @@ void loop()
           Serial.print(mfrc522.uid.uidByte[i], HEX);
           content.toUpperCase();
         }
+
+        readFrom(blockNumber, readBlockData);
       }
     } 
     else 
     {
+      playTone(RFID_TONE, DURATION);
+
       /** 
        * Prepare the ksy for authentication.
        * All keys are set to FFFFFFFFFFFFH at chip delivery 
@@ -102,13 +106,41 @@ void loop()
       {
         key.keyByte[i] = 0xFF;
       }
+
+      writeIntoCard(blockNumber, blockData);
     }
   }
 }
 
 void writeIntoCard(int blockNumber, byte blockData[])
 {
+  /** Authenticating the desired data block for write access using Key A */
+  status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, blockNumber, &key, &(mfrc522.uid));
 
+  if (status != MFRC522::STATUS_OK)
+  {
+    Serial.println("\nAuthentication failed for Write: ");
+    Serial.println(mfrc522.GetStatusCodeName(status));
+    return;
+  }
+  else
+  {
+    Serial.println("\nAuthentication success");
+  }
+  
+  /** Write data to the block */
+  status = mfrc522.MIFARE_Write(blockNumber, blockData, 16);
+  
+  if (status != MFRC522::STATUS_OK)
+  {
+    Serial.println("\nWriting to Block failed: ");
+    Serial.println(mfrc522.GetStatusCodeName(status));
+    return;
+  }
+  else
+  {
+    Serial.println("\nData was written into Block successfully");
+  }
 }
 
 /** Read Data and metadata from RFID / NFC tag */
@@ -120,33 +152,20 @@ void readFrom(int blockNumber, byte readBlockData[])
 
   if (status != MFRC522::STATUS_OK)
   {
-    log("Authnetication failed... READ_UNAUTHORISED", true);
-    log(String(mfrc522.GetStatusCodeName(status)), true);
+    Serial.println("\nAuthnetication failed.READ_UNAUTHORISED");
+    // Serial.println(mfrc522.GetStatusCodeName(status));
 
     return;
   }
   else
   {
-    log('Authorised, READ_AUTHORISED', true);
+    Serial.println("Authorised READ_AUTHORISED");
   }
 
   /** Read Data from [block] */
   status = mfrc522.MIFARE_Read(blockNumber, readBlockData, &bufferLen);
 
   return;
-}
-
-/** Logging every data possible */
-void log(String input, bool isNewLine)
-{
-  if (isNewLine)
-  {
-    Serial.println(input);
-  }
-  else 
-  {
-    Serial.print(input);
-  }  
 }
 
 /** Play Tone in buzzer */
