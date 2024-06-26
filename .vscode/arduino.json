@@ -1,6 +1,5 @@
 {
+    "port": "/dev/tty.usbserial-10",
     "board": "arduino:avr:uno",
-    "port": "COM16",
-    "programmer": "arduino:avrisp",
-    "sketch": "RFIDWRITER\\RFIDWRITER.ino"
+    "sketch": "RFID/RFID.ino"
 }
