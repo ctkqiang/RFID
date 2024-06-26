@@ -1,8 +1,8 @@
 # RFID_arduino
 
-RFID PROJECT
+RFID 项目
 ```
- * Configuation
+ * 配置
  * +-----------------+-------------+
  * | RFID RC522 PIN  | ARDUINO UNO |
  * +-----------------+-------------+
@@ -16,3 +16,9 @@ RFID PROJECT
  * | 3.3V            | 3.3V        |
  * +-----------------+-------------+
  ```
+
+
+
+如果你真的喜欢我的作品,
+<br />
+<img src="https://raw.githubusercontent.com/johnmelodyme/current_location/johnmelodyme-alipayqr/IMG_4026.JPG"  style="height: 500px !important;width: 300px !important;" >
